@@ -3,6 +3,7 @@ package com.czo.restaurantes_api.controller;
 import com.czo.restaurantes_api.dto.UsuarioRequestDTO;
 import com.czo.restaurantes_api.dto.UsuarioResponseDTO;
 import com.czo.restaurantes_api.service.UsuarioService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +20,7 @@ public class UsuarioController {
     private final UsuarioService service;
 
     @PostMapping
-    public UsuarioResponseDTO salvar(@RequestBody UsuarioRequestDTO dto) {
+    public UsuarioResponseDTO salvar(@Valid @RequestBody UsuarioRequestDTO dto) {
 
         return service.salvar(dto);
     }
@@ -31,7 +32,7 @@ public class UsuarioController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> atualizar(@PathVariable UUID id, @RequestBody UsuarioRequestDTO dto) {
+    public ResponseEntity<Void> atualizar(@Valid @PathVariable UUID id, @RequestBody UsuarioRequestDTO dto) {
 
         service.atualizarUsuarios(id, dto);
 
@@ -39,7 +40,7 @@ public class UsuarioController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<Void> atualizarSenha(@PathVariable UUID id, @RequestBody UsuarioRequestDTO dto) {
+    public ResponseEntity<Void> atualizarSenha(@Valid @PathVariable UUID id, @RequestBody UsuarioRequestDTO dto) {
         service.atualizarSenha(id, dto);
         return ResponseEntity.noContent().build();
     }

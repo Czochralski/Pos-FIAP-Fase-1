@@ -2,6 +2,7 @@ package com.czo.restaurantes_api.service;
 
 import com.czo.restaurantes_api.dto.UsuarioRequestDTO;
 import com.czo.restaurantes_api.dto.UsuarioResponseDTO;
+import com.czo.restaurantes_api.exceptions.ResourceNotFoundException;
 import com.czo.restaurantes_api.mapper.EnderecoMapper;
 import com.czo.restaurantes_api.mapper.UsuarioMapper;
 import com.czo.restaurantes_api.model.Cliente;
@@ -9,6 +10,7 @@ import com.czo.restaurantes_api.model.DonoRestaurante;
 import com.czo.restaurantes_api.model.TipoUsuario;
 import com.czo.restaurantes_api.model.Usuario;
 import com.czo.restaurantes_api.repository.UsuarioRepository;
+import com.czo.restaurantes_api.validator.UsuarioValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +24,7 @@ public class UsuarioServiceImpl implements UsuarioService {
     private final UsuarioRepository repository;
     private final UsuarioMapper mapper;
     private final EnderecoMapper enderecoMapper;
+    private final UsuarioValidator validator;
 
     @Override
     public UsuarioResponseDTO salvar(UsuarioRequestDTO usuarioDTO) {
@@ -44,6 +47,7 @@ public class UsuarioServiceImpl implements UsuarioService {
         usuario.setEndereco(
                 enderecoMapper.toEntity(usuarioDTO.endereco()));
 
+        validator.validar(usuario);
         Usuario usuarioSalvo = repository.save(usuario);
 
         return mapper.toResponse(usuarioSalvo);
@@ -65,7 +69,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 
         Usuario usuario = repository.findById(id)
                 .orElseThrow(() ->
-                        new IllegalArgumentException("Usuário não encontrado"));
+                        new ResourceNotFoundException("Usuário não encontrado"));
 
         usuario.setNome(usuarioDTO.nome());
         usuario.setEmail(usuarioDTO.email());
@@ -73,6 +77,7 @@ public class UsuarioServiceImpl implements UsuarioService {
         usuario.setEndereco(
                 enderecoMapper.toEntity(usuarioDTO.endereco()));
 
+        validator.validar(usuario);
         repository.save(usuario);
     }
 
@@ -80,7 +85,7 @@ public class UsuarioServiceImpl implements UsuarioService {
     public void atualizarSenha(UUID id, UsuarioRequestDTO usuarioDTO) {
         Usuario usuario = repository.findById(id)
                 .orElseThrow(() ->
-                        new IllegalArgumentException("Usuário não encontrado"));
+                        new ResourceNotFoundException("Usuário não encontrado"));
         usuario.setSenha(usuarioDTO.senha());
 
         repository.save(usuario);
@@ -90,7 +95,7 @@ public class UsuarioServiceImpl implements UsuarioService {
     public void deletar(UUID id){
         Usuario usuario = repository.findById(id)
                 .orElseThrow(() ->
-                        new IllegalArgumentException("Usuário não encontrado"));
+                        new ResourceNotFoundException("Usuário não encontrado"));
 
         repository.delete(usuario);
     }
