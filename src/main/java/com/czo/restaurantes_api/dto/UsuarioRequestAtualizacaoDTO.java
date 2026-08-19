@@ -6,7 +6,7 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
-public record UsuarioRequestDTO(
+public record UsuarioRequestAtualizacaoDTO(
 
         @NotBlank(message = "Campo Obrigatório")
         String nome,
@@ -17,12 +17,6 @@ public record UsuarioRequestDTO(
 
         @NotBlank(message = "Campo Obrigatório")
         String login,
-
-        @NotBlank(message = "Campo Obrigatório")
-        String senha,
-
-        @NotNull(message = "Campo Obrigatório")
-        TipoUsuario tipoUsuario,
 
         @Valid
         @NotNull(message = "Campo Obrigatório")
