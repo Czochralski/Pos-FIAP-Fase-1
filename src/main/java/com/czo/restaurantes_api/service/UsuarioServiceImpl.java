@@ -1,6 +1,8 @@
 package com.czo.restaurantes_api.service;
 
-import com.czo.restaurantes_api.dto.UsuarioRequestDTO;
+import com.czo.restaurantes_api.dto.UsuarioRequestAtualizacaoDTO;
+import com.czo.restaurantes_api.dto.UsuarioRequestCadastroDTO;
+import com.czo.restaurantes_api.dto.UsuarioRequestSenhaDTO;
 import com.czo.restaurantes_api.dto.UsuarioResponseDTO;
 import com.czo.restaurantes_api.exceptions.ResourceNotFoundException;
 import com.czo.restaurantes_api.mapper.EnderecoMapper;
@@ -12,6 +14,7 @@ import com.czo.restaurantes_api.model.Usuario;
 import com.czo.restaurantes_api.repository.UsuarioRepository;
 import com.czo.restaurantes_api.validator.UsuarioValidator;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,9 +28,10 @@ public class UsuarioServiceImpl implements UsuarioService {
     private final UsuarioMapper mapper;
     private final EnderecoMapper enderecoMapper;
     private final UsuarioValidator validator;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
-    public UsuarioResponseDTO salvar(UsuarioRequestDTO usuarioDTO) {
+    public UsuarioResponseDTO salvar(UsuarioRequestCadastroDTO usuarioDTO) {
 
         TipoUsuario tipoUsuario = usuarioDTO.tipoUsuario();
 
@@ -43,7 +47,7 @@ public class UsuarioServiceImpl implements UsuarioService {
         usuario.setNome(usuarioDTO.nome());
         usuario.setEmail(usuarioDTO.email());
         usuario.setLogin(usuarioDTO.login());
-        usuario.setSenha(usuarioDTO.senha());
+        usuario.setSenha(passwordEncoder.encode(usuarioDTO.senha()));
         usuario.setEndereco(
                 enderecoMapper.toEntity(usuarioDTO.endereco()));
 
@@ -65,7 +69,7 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
-    public void atualizarUsuarios(UUID id, UsuarioRequestDTO usuarioDTO) {
+    public void atualizarUsuarios(UUID id, UsuarioRequestAtualizacaoDTO usuarioDTO) {
 
         Usuario usuario = repository.findById(id)
                 .orElseThrow(() ->
@@ -82,11 +86,11 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
-    public void atualizarSenha(UUID id, UsuarioRequestDTO usuarioDTO) {
+    public void atualizarSenha(UUID id, UsuarioRequestSenhaDTO usuarioDTO) {
         Usuario usuario = repository.findById(id)
                 .orElseThrow(() ->
                         new ResourceNotFoundException("Usuário não encontrado"));
-        usuario.setSenha(usuarioDTO.senha());
+        usuario.setSenha(passwordEncoder.encode(usuarioDTO.senha()));
 
         repository.save(usuario);
     }
