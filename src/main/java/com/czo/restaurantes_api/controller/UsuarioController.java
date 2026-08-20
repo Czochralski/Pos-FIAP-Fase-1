@@ -1,9 +1,6 @@
 package com.czo.restaurantes_api.controller;
 
-import com.czo.restaurantes_api.dto.UsuarioRequestAtualizacaoDTO;
-import com.czo.restaurantes_api.dto.UsuarioRequestCadastroDTO;
-import com.czo.restaurantes_api.dto.UsuarioRequestSenhaDTO;
-import com.czo.restaurantes_api.dto.UsuarioResponseDTO;
+import com.czo.restaurantes_api.dto.*;
 import com.czo.restaurantes_api.service.UsuarioService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -14,14 +11,14 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/usuarios")
+@RequestMapping("/v1/usuarios")
 @RequiredArgsConstructor
 public class UsuarioController {
 
     private final UsuarioService service;
 
     @PostMapping
-    public UsuarioResponseDTO salvar(@Valid @RequestBody UsuarioRequestCadastroDTO dto) {
+    public UsuarioResponseCadastroDTO salvar(@Valid @RequestBody UsuarioRequestCadastroDTO dto) {
 
         return service.salvar(dto);
     }

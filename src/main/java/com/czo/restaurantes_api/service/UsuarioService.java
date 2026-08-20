@@ -1,16 +1,13 @@
 package com.czo.restaurantes_api.service;
 
-import com.czo.restaurantes_api.dto.UsuarioRequestAtualizacaoDTO;
-import com.czo.restaurantes_api.dto.UsuarioRequestCadastroDTO;
-import com.czo.restaurantes_api.dto.UsuarioRequestSenhaDTO;
-import com.czo.restaurantes_api.dto.UsuarioResponseDTO;
+import com.czo.restaurantes_api.dto.*;
 
 import java.util.List;
 import java.util.UUID;
 
 public interface UsuarioService {
 
-    UsuarioResponseDTO salvar(UsuarioRequestCadastroDTO usuarioRequestCadastroDTO);
+    UsuarioResponseCadastroDTO salvar(UsuarioRequestCadastroDTO usuarioRequestCadastroDTO);
 
     List<UsuarioResponseDTO> buscarUsuarios(String nome);
 

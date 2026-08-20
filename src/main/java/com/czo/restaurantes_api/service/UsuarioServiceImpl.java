@@ -1,9 +1,6 @@
 package com.czo.restaurantes_api.service;
 
-import com.czo.restaurantes_api.dto.UsuarioRequestAtualizacaoDTO;
-import com.czo.restaurantes_api.dto.UsuarioRequestCadastroDTO;
-import com.czo.restaurantes_api.dto.UsuarioRequestSenhaDTO;
-import com.czo.restaurantes_api.dto.UsuarioResponseDTO;
+import com.czo.restaurantes_api.dto.*;
 import com.czo.restaurantes_api.exceptions.ResourceNotFoundException;
 import com.czo.restaurantes_api.mapper.EnderecoMapper;
 import com.czo.restaurantes_api.mapper.UsuarioMapper;
@@ -31,7 +28,7 @@ public class UsuarioServiceImpl implements UsuarioService {
     private final PasswordEncoder passwordEncoder;
 
     @Override
-    public UsuarioResponseDTO salvar(UsuarioRequestCadastroDTO usuarioDTO) {
+    public UsuarioResponseCadastroDTO salvar(UsuarioRequestCadastroDTO usuarioDTO) {
 
         TipoUsuario tipoUsuario = usuarioDTO.tipoUsuario();
 
@@ -54,7 +51,7 @@ public class UsuarioServiceImpl implements UsuarioService {
         validator.validar(usuario);
         Usuario usuarioSalvo = repository.save(usuario);
 
-        return mapper.toResponse(usuarioSalvo);
+        return mapper.toResponseCadastro(usuarioSalvo);
     }
 
     @Override
