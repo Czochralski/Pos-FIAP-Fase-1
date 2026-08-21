@@ -1,7 +1,9 @@
 package com.czo.restaurantes_api.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 
+@Schema(name = "Endereço")
 public record EnderecoDTO(
         @NotBlank(message = "Campo Obrigatório")
         String rua,
