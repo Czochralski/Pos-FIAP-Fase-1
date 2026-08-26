@@ -1,0 +1,686 @@
+{
+  "info": {
+    "_postman_id": "b9ae8cbd-ae79-4bc2-934c-d0a52ee87a6b",
+    "name": "Tech Challenge Fase 1",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "24427194",
+    "_collection_link": "https://go.postman.co/collection/24427194-b9ae8cbd-ae79-4bc2-934c-d0a52ee87a6b?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Usuário",
+      "item": [
+        {
+          "name": "Cadastro",
+          "item": [
+            {
+              "name": "Sucesso",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "const response = pm.response.json();\r",
+                      "\r",
+                      "pm.collectionVariables.set(\"usuarioId\", response.id);\r",
+                      ""
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "noauth"
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"nome\": \"Bruno Miranda\",\r\n    \"email\": \"brunomiranda@email.com\",\r\n    \"login\": \"brunoM\",\r\n    \"senha\": \"123456\",\r\n    \"tipoUsuario\": \"CLIENTE\",\r\n    \"endereco\": {\r\n        \"rua\": \"Rua teste\",\r\n        \"numero\": \"10\",\r\n        \"bairro\": \"Centro\",\r\n        \"cidade\": \"Recife\",\r\n        \"estado\": \"PE\",\r\n        \"cep\": \"01000-000\"\r\n    }\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/v1/usuarios",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "usuarios"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "E-mail duplicado",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"nome\": \"Bruno Miranda\",\r\n    \"email\": \"brunomiranda@email.com\",\r\n    \"login\": \"brunoM\",\r\n    \"senha\": \"123456\",\r\n    \"tipoUsuario\": \"CLIENTE\",\r\n    \"endereco\": {\r\n        \"rua\": \"Rua teste\",\r\n        \"numero\": \"10\",\r\n        \"bairro\": \"Centro\",\r\n        \"cidade\": \"Recife\",\r\n        \"estado\": \"PE\",\r\n        \"cep\": \"01000-000\"\r\n    }\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/v1/usuarios",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "usuarios"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Login duplicado",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"nome\": \"Bruno Miranda\",\r\n    \"email\": \"brunomiranda2@email.com\",\r\n    \"login\": \"brunoM\",\r\n    \"senha\": \"123456\",\r\n    \"tipoUsuario\": \"CLIENTE\",\r\n    \"endereco\": {\r\n        \"rua\": \"Rua teste\",\r\n        \"numero\": \"10\",\r\n        \"bairro\": \"Centro\",\r\n        \"cidade\": \"Recife\",\r\n        \"estado\": \"PE\",\r\n        \"cep\": \"01000-000\"\r\n    }\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/v1/usuarios",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "usuarios"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Campos Inválidos",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"nome\": \"\",\r\n    \"email\": \"brunomiranda2@email.com\",\r\n    \"login\": \"brunoM2\",\r\n    \"senha\": \"\",\r\n    \"tipoUsuario\": \"CLIENTE\",\r\n    \"endereco\": {\r\n        \"rua\": \"\",\r\n        \"numero\": \"10\",\r\n        \"bairro\": \"\",\r\n        \"cidade\": \"Recife\",\r\n        \"estado\": \"PE\",\r\n        \"cep\": \"01000-000\"\r\n    }\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/v1/usuarios",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "usuarios"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Autenticação",
+          "item": [
+            {
+              "name": "Credencial incorreta",
+              "request": {
+                "auth": {
+                  "type": "basic",
+                  "basic": [
+                    {
+                      "key": "password",
+                      "value": "654321",
+                      "type": "string"
+                    },
+                    {
+                      "key": "username",
+                      "value": "brunoM",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "HEAD",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/v1/usuarios?nome=",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "usuarios"
+                  ],
+                  "query": [
+                    {
+                      "key": "nome",
+                      "value": "bruno",
+                      "disabled": true
+                    },
+                    {
+                      "key": "nome",
+                      "value": ""
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Credencial correta",
+              "request": {
+                "auth": {
+                  "type": "basic",
+                  "basic": [
+                    {
+                      "key": "password",
+                      "value": "123456",
+                      "type": "string"
+                    },
+                    {
+                      "key": "username",
+                      "value": "brunoM",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "HEAD",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/v1/usuarios?nome=",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "usuarios"
+                  ],
+                  "query": [
+                    {
+                      "key": "nome",
+                      "value": ""
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Buscar",
+          "item": [
+            {
+              "name": "Buscar usuarios",
+              "request": {
+                "auth": {
+                  "type": "basic",
+                  "basic": [
+                    {
+                      "key": "password",
+                      "value": "123456",
+                      "type": "string"
+                    },
+                    {
+                      "key": "username",
+                      "value": "brunoM",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/v1/usuarios?nome=bruno",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "usuarios"
+                  ],
+                  "query": [
+                    {
+                      "key": "nome",
+                      "value": "bruno"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Atualizar",
+          "item": [
+            {
+              "name": "Sucesso",
+              "request": {
+                "auth": {
+                  "type": "basic",
+                  "basic": [
+                    {
+                      "key": "password",
+                      "value": "123456",
+                      "type": "string"
+                    },
+                    {
+                      "key": "username",
+                      "value": "brunoM",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "PUT",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"nome\": \"Bruno Miranda\",\r\n    \"email\": \"brunomiranda@email.com\",\r\n    \"login\": \"brunoM\",\r\n    \"endereco\": {\r\n        \"rua\": \"Rua A\",\r\n        \"numero\": \"55\",\r\n        \"bairro\": \"Centro\",\r\n        \"cidade\": \"Recife\",\r\n        \"estado\": \"PE\",\r\n        \"cep\": \"54021-621\"\r\n    }\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/v1/usuarios/{{usuarioId}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "usuarios",
+                    "{{usuarioId}}"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Erro - Campo Inválido",
+              "request": {
+                "auth": {
+                  "type": "basic",
+                  "basic": [
+                    {
+                      "key": "password",
+                      "value": "123456",
+                      "type": "string"
+                    },
+                    {
+                      "key": "username",
+                      "value": "brunoM",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "PUT",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"nome\": \"Bruno Miranda\",\r\n    \"email\": \"brunomiranda@email.com\",\r\n    \"login\": \"brunoM\",\r\n    \"endereco\": {\r\n        \"rua\": \"\",\r\n        \"numero\": \"55\",\r\n        \"bairro\": \"Centro\",\r\n        \"cidade\": \"Recife\",\r\n        \"estado\": \"PE\",\r\n        \"cep\": \"54021-621\"\r\n    }\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/v1/usuarios/{{usuarioId}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "usuarios",
+                    "{{usuarioId}}"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Usuário inexistente",
+              "request": {
+                "auth": {
+                  "type": "basic",
+                  "basic": [
+                    {
+                      "key": "password",
+                      "value": "123456",
+                      "type": "string"
+                    },
+                    {
+                      "key": "username",
+                      "value": "brunoM",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "PUT",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"nome\": \"Bruno Miranda\",\r\n    \"email\": \"brunomiranda@email.com\",\r\n    \"login\": \"brunoM\",\r\n    \"endereco\": {\r\n        \"rua\": \"Rua A\",\r\n        \"numero\": \"55\",\r\n        \"bairro\": \"Centro\",\r\n        \"cidade\": \"Recife\",\r\n        \"estado\": \"PE\",\r\n        \"cep\": \"54021-621\"\r\n    }\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/v1/usuarios/7ecb570a-ba0c-4564-b98b-8a6aa25d111e",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "usuarios",
+                    "7ecb570a-ba0c-4564-b98b-8a6aa25d111e"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Senha - Sucesso",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      ""
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "basic",
+                  "basic": [
+                    {
+                      "key": "password",
+                      "value": "123456",
+                      "type": "string"
+                    },
+                    {
+                      "key": "username",
+                      "value": "brunoM",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "PATCH",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"senha\": \"12345678\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/v1/usuarios/{{usuarioId}}/senha",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "usuarios",
+                    "{{usuarioId}}",
+                    "senha"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Senha - Usuário inexistente",
+              "request": {
+                "auth": {
+                  "type": "basic",
+                  "basic": [
+                    {
+                      "key": "password",
+                      "value": "12345678",
+                      "type": "string"
+                    },
+                    {
+                      "key": "username",
+                      "value": "brunoM",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "PATCH",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"senha\": \"123456\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/v1/usuarios/7ecb570a-ba0c-4564-b98b-8a6aa25d111e/senha",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "usuarios",
+                    "7ecb570a-ba0c-4564-b98b-8a6aa25d111e",
+                    "senha"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Senha - Erro - Campo Inválido",
+              "request": {
+                "auth": {
+                  "type": "basic",
+                  "basic": [
+                    {
+                      "key": "password",
+                      "value": "12345678",
+                      "type": "string"
+                    },
+                    {
+                      "key": "username",
+                      "value": "brunoM",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "PATCH",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"senha\": \"\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/v1/usuarios/{{usuarioId}}/senha",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "usuarios",
+                    "{{usuarioId}}",
+                    "senha"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Deletar",
+          "item": [
+            {
+              "name": "Usuário inexistente",
+              "request": {
+                "auth": {
+                  "type": "basic",
+                  "basic": [
+                    {
+                      "key": "password",
+                      "value": "12345678",
+                      "type": "string"
+                    },
+                    {
+                      "key": "username",
+                      "value": "brunoM",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/v1/usuarios/7ecb570a-ba0c-4564-b98b-8a6aa25d111e",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "usuarios",
+                    "7ecb570a-ba0c-4564-b98b-8a6aa25d111e"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Sucesso",
+              "request": {
+                "auth": {
+                  "type": "basic",
+                  "basic": [
+                    {
+                      "key": "password",
+                      "value": "12345678",
+                      "type": "string"
+                    },
+                    {
+                      "key": "username",
+                      "value": "brunoM",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/v1/usuarios/{{usuarioId}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "usuarios",
+                    "{{usuarioId}}"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        }
+      ],
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {},
+            "exec": [
+              ""
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {},
+            "exec": [
+              ""
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080"
+    }
+  ]
+}
