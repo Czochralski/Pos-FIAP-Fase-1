@@ -37,7 +37,7 @@ Para executar a aplicação utilizando Docker Compose, é necessário ter:
 ## Estrutura do Projeto
 
 ```
-/
+Pos-FIAP-Fase-1/
 ├── config
 ├── controller
 ├── dto
