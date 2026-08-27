@@ -30,7 +30,7 @@ Para executar a aplicação utilizando Docker Compose, é necessário ter:
 
 | Requisito | Descrição |
 |---|---|
-| Docker | Necessário para executar os containers da API e do PostgreSQL. |
+| Docker Desktop | Necessário para executar os containers da API e do PostgreSQL. |
 | Git | Necessário para clonar o repositório. |
 | Postman | Recomendado para executar e validar os testes da API. |
 
