@@ -10,6 +10,8 @@ public record UsuarioResponseDTO(
 
         String login,
 
-        EnderecoDTO endereco
+        EnderecoDTO endereco,
+
+        TipoUsuarioDTO tipoUsuario
 ) {
 }

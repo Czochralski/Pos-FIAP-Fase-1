@@ -4,10 +4,9 @@ import com.czo.restaurantes_api.dto.*;
 import com.czo.restaurantes_api.exceptions.ResourceNotFoundException;
 import com.czo.restaurantes_api.mapper.EnderecoMapper;
 import com.czo.restaurantes_api.mapper.UsuarioMapper;
-import com.czo.restaurantes_api.model.Cliente;
-import com.czo.restaurantes_api.model.DonoRestaurante;
 import com.czo.restaurantes_api.model.TipoUsuario;
 import com.czo.restaurantes_api.model.Usuario;
+import com.czo.restaurantes_api.repository.TipoUsuarioRepository;
 import com.czo.restaurantes_api.repository.UsuarioRepository;
 import com.czo.restaurantes_api.validator.UsuarioValidator;
 import lombok.RequiredArgsConstructor;
@@ -26,20 +25,17 @@ public class UsuarioServiceImpl implements UsuarioService {
     private final EnderecoMapper enderecoMapper;
     private final UsuarioValidator validator;
     private final PasswordEncoder passwordEncoder;
+    private final TipoUsuarioRepository tipoUsuarioRepository;
 
     @Override
     public UsuarioResponseCadastroDTO salvar(UsuarioRequestCadastroDTO usuarioDTO) {
 
-        TipoUsuario tipoUsuario = usuarioDTO.tipoUsuario();
+        TipoUsuario tipoUsuario = tipoUsuarioRepository
+                .findByNomeTipoIgnoreCase(usuarioDTO.tipoUsuario().nomeTipo())
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Tipo de usuário não encontrado"));
 
-        if (tipoUsuario == null) {
-            throw new IllegalArgumentException("Tipo de usuário é obrigatório");
-        }
-
-        Usuario usuario = switch (tipoUsuario) {
-            case CLIENTE -> new Cliente();
-            case DONO -> new DonoRestaurante();
-        };
+        Usuario usuario = new Usuario();
 
         usuario.setNome(usuarioDTO.nome());
         usuario.setEmail(usuarioDTO.email());
@@ -47,6 +43,7 @@ public class UsuarioServiceImpl implements UsuarioService {
         usuario.setSenha(passwordEncoder.encode(usuarioDTO.senha()));
         usuario.setEndereco(
                 enderecoMapper.toEntity(usuarioDTO.endereco()));
+        usuario.setTipoUsuario(tipoUsuario);
 
         validator.validar(usuario);
         Usuario usuarioSalvo = repository.save(usuario);

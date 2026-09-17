@@ -2,6 +2,7 @@ package com.czo.restaurantes_api.controller.handlers;
 
 import com.czo.restaurantes_api.exceptions.RegistroDuplicadoException;
 import com.czo.restaurantes_api.exceptions.ResourceNotFoundException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
@@ -9,6 +10,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+
 
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -77,6 +79,25 @@ public class ControllerExceptionHandler {
                 ));
 
         problemDetail.setProperty("errors", erros);
+
+        return ResponseEntity
+                .status(status)
+                .body(problemDetail);
+    }
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<ProblemDetail> handlerDataIntegrityViolation(
+            DataIntegrityViolationException e) {
+
+        var status = HttpStatus.CONFLICT;
+
+        ProblemDetail problemDetail =
+                ProblemDetail.forStatusAndDetail(
+                        status,
+                        "Não é possível excluir o tipo de usuário porque ele está associado a um ou mais usuários"
+                );
+
+        problemDetail.setTitle("Operação não permitida");
 
         return ResponseEntity
                 .status(status)

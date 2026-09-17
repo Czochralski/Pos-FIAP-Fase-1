@@ -1,7 +1,5 @@
 package com.czo.restaurantes_api.security;
 
-import com.czo.restaurantes_api.model.Cliente;
-import com.czo.restaurantes_api.model.DonoRestaurante;
 import com.czo.restaurantes_api.model.Usuario;
 import com.czo.restaurantes_api.repository.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
@@ -25,20 +23,9 @@ public class UsuarioDetailsService implements UserDetailsService {
                 .orElseThrow(() ->
                         new UsernameNotFoundException("Usuário não encontrado"));
 
-        String role;
-
-        if (usuario instanceof Cliente) {
-            role = "CLIENTE";
-        } else if (usuario instanceof DonoRestaurante) {
-            role = "DONO";
-        } else {
-            throw new IllegalArgumentException("Tipo de usuário inválido");
-        }
-
         return User
                 .withUsername(usuario.getLogin())
                 .password(usuario.getSenha())
-                .roles(role)
                 .build();
     }
 }

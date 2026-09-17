@@ -1,0 +1,13 @@
+package com.czo.restaurantes_api.repository;
+
+import com.czo.restaurantes_api.model.TipoUsuario;
+import com.czo.restaurantes_api.model.Usuario;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.Optional;
+import java.util.UUID;
+
+public interface TipoUsuarioRepository extends JpaRepository<TipoUsuario, UUID> {
+    Optional<TipoUsuario> findByNomeTipoIgnoreCase(String nomeTipo);
+    boolean existsByNomeTipoIgnoreCase(String nomeTipo);
+}

@@ -16,12 +16,8 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(
-        name = "tipo_usuario",
-        discriminatorType = DiscriminatorType.STRING
-)
-public abstract class Usuario {
+
+public class Usuario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -55,4 +51,11 @@ public abstract class Usuario {
     )
     @JoinColumn(name = "endereco_id")
     private Endereco endereco;
+
+    @ManyToOne(
+            fetch = FetchType.LAZY,
+            optional = false
+    )
+    @JoinColumn(name = "tipo_usuario_id", nullable = false)
+    private TipoUsuario tipoUsuario;
 }

@@ -23,11 +23,12 @@ public record UsuarioRequestCadastroDTO(
         @NotBlank(message = "Campo Obrigatório")
         String senha,
 
+        @Valid
         @NotNull(message = "Campo Obrigatório")
-        TipoUsuario tipoUsuario,
+        EnderecoDTO endereco,
 
         @Valid
         @NotNull(message = "Campo Obrigatório")
-        EnderecoDTO endereco
+        TipoUsuarioDTO tipoUsuario
 ) {
 }
