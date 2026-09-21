@@ -1,9 +1,7 @@
 package com.czo.restaurantes_api.service;
 
-import com.czo.restaurantes_api.dto.TipoUsuarioDTO;
-import com.czo.restaurantes_api.dto.TipoUsuarioResponseCadastroDTO;
-import com.czo.restaurantes_api.dto.UsuarioResponseDTO;
-import com.czo.restaurantes_api.model.TipoUsuario;
+import com.czo.restaurantes_api.dto.tipoUsuario.TipoUsuarioDTO;
+import com.czo.restaurantes_api.dto.tipoUsuario.TipoUsuarioResponseCadastroDTO;
 
 import java.util.List;
 import java.util.UUID;

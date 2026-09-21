@@ -34,6 +34,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.POST, "/v1/usuarios").permitAll()
                         .requestMatchers(HttpMethod.POST, "/v1/tipo-usuario").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/v1/restaurante").permitAll()
                         .anyRequest().authenticated())
                 .httpBasic(Customizer.withDefaults());
 

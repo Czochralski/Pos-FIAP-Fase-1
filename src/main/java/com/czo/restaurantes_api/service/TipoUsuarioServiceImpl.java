@@ -1,7 +1,7 @@
 package com.czo.restaurantes_api.service;
 
-import com.czo.restaurantes_api.dto.TipoUsuarioDTO;
-import com.czo.restaurantes_api.dto.TipoUsuarioResponseCadastroDTO;
+import com.czo.restaurantes_api.dto.tipoUsuario.TipoUsuarioDTO;
+import com.czo.restaurantes_api.dto.tipoUsuario.TipoUsuarioResponseCadastroDTO;
 import com.czo.restaurantes_api.exceptions.RegistroDuplicadoException;
 import com.czo.restaurantes_api.exceptions.ResourceNotFoundException;
 import com.czo.restaurantes_api.mapper.TipoUsuarioMapper;

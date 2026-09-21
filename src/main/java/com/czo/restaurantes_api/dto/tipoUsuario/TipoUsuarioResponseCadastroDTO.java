@@ -1,6 +1,4 @@
-package com.czo.restaurantes_api.dto;
-
-import jakarta.validation.constraints.NotBlank;
+package com.czo.restaurantes_api.dto.tipoUsuario;
 
 import java.util.UUID;
 

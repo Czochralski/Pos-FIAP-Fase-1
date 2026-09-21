@@ -1,6 +1,6 @@
 package com.czo.restaurantes_api.service;
 
-import com.czo.restaurantes_api.dto.*;
+import com.czo.restaurantes_api.dto.usuario.*;
 import com.czo.restaurantes_api.exceptions.ResourceNotFoundException;
 import com.czo.restaurantes_api.mapper.EnderecoMapper;
 import com.czo.restaurantes_api.mapper.UsuarioMapper;

@@ -1,6 +1,6 @@
 package com.czo.restaurantes_api.service;
 
-import com.czo.restaurantes_api.dto.*;
+import com.czo.restaurantes_api.dto.usuario.*;
 
 import java.util.List;
 import java.util.UUID;

@@ -1,6 +1,6 @@
 package com.czo.restaurantes_api.controller;
 
-import com.czo.restaurantes_api.dto.*;
+import com.czo.restaurantes_api.dto.usuario.*;
 import com.czo.restaurantes_api.service.UsuarioService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;

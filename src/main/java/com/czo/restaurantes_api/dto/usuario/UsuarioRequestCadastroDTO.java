@@ -1,6 +1,7 @@
-package com.czo.restaurantes_api.dto;
+package com.czo.restaurantes_api.dto.usuario;
 
-import com.czo.restaurantes_api.model.TipoUsuario;
+import com.czo.restaurantes_api.dto.EnderecoDTO;
+import com.czo.restaurantes_api.dto.tipoUsuario.TipoUsuarioDTO;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
