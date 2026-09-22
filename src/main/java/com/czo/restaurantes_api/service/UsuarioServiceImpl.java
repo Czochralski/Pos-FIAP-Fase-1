@@ -35,17 +35,15 @@ public class UsuarioServiceImpl implements UsuarioService {
                 .orElseThrow(() ->
                         new ResourceNotFoundException("Tipo de usuário não encontrado"));
 
-        Usuario usuario = new Usuario();
+        Usuario usuario = mapper.toEntity(usuarioDTO);
 
-        usuario.setNome(usuarioDTO.nome());
-        usuario.setEmail(usuarioDTO.email());
-        usuario.setLogin(usuarioDTO.login());
-        usuario.setSenha(passwordEncoder.encode(usuarioDTO.senha()));
-        usuario.setEndereco(
-                enderecoMapper.toEntity(usuarioDTO.endereco()));
+        usuario.setSenha(
+                passwordEncoder.encode(usuarioDTO.senha())
+        );
         usuario.setTipoUsuario(tipoUsuario);
 
         validator.validar(usuario);
+
         Usuario usuarioSalvo = repository.save(usuario);
 
         return mapper.toResponseCadastro(usuarioSalvo);
@@ -69,13 +67,10 @@ public class UsuarioServiceImpl implements UsuarioService {
                 .orElseThrow(() ->
                         new ResourceNotFoundException("Usuário não encontrado"));
 
-        usuario.setNome(usuarioDTO.nome());
-        usuario.setEmail(usuarioDTO.email());
-        usuario.setLogin(usuarioDTO.login());
-        usuario.setEndereco(
-                enderecoMapper.toEntity(usuarioDTO.endereco()));
+        mapper.atualizar(usuario, usuarioDTO);
 
         validator.validar(usuario);
+
         repository.save(usuario);
     }
 
