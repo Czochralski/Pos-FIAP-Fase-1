@@ -2,7 +2,6 @@ package com.czo.restaurantes_api.service;
 
 import com.czo.restaurantes_api.dto.usuario.*;
 import com.czo.restaurantes_api.exceptions.ResourceNotFoundException;
-import com.czo.restaurantes_api.mapper.EnderecoMapper;
 import com.czo.restaurantes_api.mapper.UsuarioMapper;
 import com.czo.restaurantes_api.model.TipoUsuario;
 import com.czo.restaurantes_api.model.Usuario;
@@ -22,7 +21,6 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     private final UsuarioRepository repository;
     private final UsuarioMapper mapper;
-    private final EnderecoMapper enderecoMapper;
     private final UsuarioValidator validator;
     private final PasswordEncoder passwordEncoder;
     private final TipoUsuarioRepository tipoUsuarioRepository;

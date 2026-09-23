@@ -12,7 +12,6 @@ public record RestauranteResponseDTO(
         String tipoCozinha,
         LocalTime horarioAbertura,
         LocalTime horarioFechamento,
-        UUID donoId,
         String donoNome
 ) {
 }

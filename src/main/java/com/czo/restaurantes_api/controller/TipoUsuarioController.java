@@ -19,21 +19,21 @@ public class TipoUsuarioController {
 
     @PostMapping
     public TipoUsuarioResponseCadastroDTO salvar(@RequestBody TipoUsuarioDTO dto) {
-        return  service.salvar(dto);
+        return  service.salvarTipoUsuario(dto);
     }
 
 
     @GetMapping
     public List<TipoUsuarioDTO> buscarTiposUsuarios() {
 
-        return service.buscaTiposUsuarios();
+        return service.buscarTiposUsuarios();
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Void> atualizarTiposUsuarios(
             @PathVariable UUID id, @RequestBody TipoUsuarioDTO dto) {
 
-        service.atualizarTiposUsuarios(id, dto);
+        service.atualizarTipoUsuario(id, dto);
 
         return ResponseEntity.noContent().build();
     }
@@ -41,7 +41,7 @@ public class TipoUsuarioController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletar(@PathVariable UUID id) {
 
-        service.deletar(id);
+        service.deletarTipoUsuario(id);
 
         return ResponseEntity.noContent().build();
     }

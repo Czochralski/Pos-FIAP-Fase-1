@@ -18,42 +18,47 @@ import java.util.UUID;
 public class TipoUsuarioServiceImpl implements TipoUsuarioService{
 
     private final TipoUsuarioRepository repository;
+
     private final TipoUsuarioMapper mapper;
 
     @Override
-    public TipoUsuarioResponseCadastroDTO salvar(TipoUsuarioDTO tipoUsuarioDTO) {
+    public TipoUsuarioResponseCadastroDTO salvarTipoUsuario(TipoUsuarioDTO tipoUsuarioDTO) {
 
         if (repository.existsByNomeTipoIgnoreCase(tipoUsuarioDTO.nomeTipo())) {
-            throw new RegistroDuplicadoException(
-                    "Tipo de usuário já existente na base de dados"
-            );
+            throw new RegistroDuplicadoException("Tipo de usuário já existente na base de dados");
         }
 
-        TipoUsuario tipoUsuario = new TipoUsuario();
-        tipoUsuario.setNomeTipo(tipoUsuarioDTO.nomeTipo());
+        TipoUsuario tipoUsuario = mapper.toEntity(tipoUsuarioDTO);
 
         repository.save(tipoUsuario);
+
         return mapper.toResponseCadastro(tipoUsuario);
     }
 
     @Override
-    public List<TipoUsuarioDTO> buscaTiposUsuarios(){
+    public List<TipoUsuarioDTO> buscarTiposUsuarios(){
+
         List<TipoUsuario> tipoUsuarios = repository.findAll();
+
         return tipoUsuarios.stream().map(mapper::toResponse).toList();
     }
 
     @Override
-    public void atualizarTiposUsuarios(UUID id, TipoUsuarioDTO tipoUsuarioDTO) {
-        TipoUsuario tipoUsuario = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Tipo de usuário não encontrado"));
+    public void atualizarTipoUsuario(UUID id, TipoUsuarioDTO tipoUsuarioDTO) {
 
-        tipoUsuario.setNomeTipo(tipoUsuarioDTO.nomeTipo());
+        TipoUsuario tipoUsuario = repository.findById(id).orElseThrow(() ->
+                new ResourceNotFoundException("Tipo de usuário não encontrado"));
+
+        mapper.atualizar(tipoUsuario, tipoUsuarioDTO);
+
         repository.save(tipoUsuario);
     }
 
     @Override
-    public void deletar(UUID id) {
+    public void deletarTipoUsuario(UUID id) {
+
        TipoUsuario tipoUsuario = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Tipo de usuário não encontrado"));
 
-        repository.delete(tipoUsuario);
+       repository.delete(tipoUsuario);
     }
 }

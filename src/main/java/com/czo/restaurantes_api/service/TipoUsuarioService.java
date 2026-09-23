@@ -8,11 +8,11 @@ import java.util.UUID;
 
 public interface TipoUsuarioService {
 
-    TipoUsuarioResponseCadastroDTO salvar(TipoUsuarioDTO tipoUsuarioDTO);
+    TipoUsuarioResponseCadastroDTO salvarTipoUsuario(TipoUsuarioDTO tipoUsuarioDTO);
 
-    void atualizarTiposUsuarios(UUID id, TipoUsuarioDTO tipoUsuarioDTO);
+    void atualizarTipoUsuario(UUID id, TipoUsuarioDTO tipoUsuarioDTO);
 
-    List<TipoUsuarioDTO> buscaTiposUsuarios();
+    List<TipoUsuarioDTO> buscarTiposUsuarios();
 
-    void deletar(UUID id);
+    void deletarTipoUsuario(UUID id);
 }

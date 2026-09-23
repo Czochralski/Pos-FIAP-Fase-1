@@ -10,11 +10,11 @@ import java.util.UUID;
 
 public interface RestauranteService {
 
-    RestauranteResponseCadastroDTO salvar(RestauranteRequestDTO restauranteRequestCadastroDTO);
+    RestauranteResponseCadastroDTO salvarRestaurante(RestauranteRequestDTO restauranteRequestCadastroDTO);
 
-    List<RestauranteResponseDTO> buscar(String nome);
+    List<RestauranteResponseDTO> buscarRestaurantes(String nome);
 
-    void atualizar(UUID id, RestauranteRequestDTO restauranteRequestDTO);
+    RestauranteResponseDTO atualizarRestaurante(UUID id, RestauranteRequestDTO restauranteRequestDTO);
 
-    void deletar(UUID id);
+    void deletarRestaurante(UUID id);
 }

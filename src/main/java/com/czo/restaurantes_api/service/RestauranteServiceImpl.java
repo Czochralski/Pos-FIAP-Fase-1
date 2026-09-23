@@ -4,9 +4,7 @@ import com.czo.restaurantes_api.dto.restaurante.RestauranteRequestDTO;
 import com.czo.restaurantes_api.dto.restaurante.RestauranteResponseCadastroDTO;
 import com.czo.restaurantes_api.dto.restaurante.RestauranteResponseDTO;
 import com.czo.restaurantes_api.exceptions.ResourceNotFoundException;
-import com.czo.restaurantes_api.mapper.EnderecoMapper;
 import com.czo.restaurantes_api.mapper.RestauranteMapper;
-import com.czo.restaurantes_api.mapper.UsuarioMapper;
 import com.czo.restaurantes_api.model.Restaurante;
 import com.czo.restaurantes_api.model.Usuario;
 import com.czo.restaurantes_api.repository.RestauranteRepository;
@@ -22,39 +20,30 @@ import java.util.UUID;
 public class RestauranteServiceImpl implements RestauranteService{
 
     private final RestauranteRepository repository;
+
     private final UsuarioRepository usuarioRepository;
-    private final EnderecoMapper enderecoMapper;
-    private final UsuarioMapper usuarioMapper;
+
     private final RestauranteMapper mapper;
 
     @Override
-    public RestauranteResponseCadastroDTO salvar(RestauranteRequestDTO dto){
+    public RestauranteResponseCadastroDTO salvarRestaurante(RestauranteRequestDTO restauranteRequestDTO){
 
-        Usuario dono = usuarioRepository.findById(dto.donoId())
-                .orElseThrow(() ->
+        Usuario dono = usuarioRepository.findById(restauranteRequestDTO.donoId()).orElseThrow(() ->
                         new ResourceNotFoundException("Usuário não encontrado"));
 
-        Restaurante restaurante = new Restaurante();
+        Restaurante restaurante = mapper.toEntity(restauranteRequestDTO);
 
-        restaurante.setNome(dto.nome());
-        restaurante.setEndereco(
-                enderecoMapper.toEntity(dto.endereco())
-        );
-        restaurante.setTipoCozinha(dto.tipoCozinha());
-        restaurante.setHorarioAbertura(dto.horarioAbertura());
-        restaurante.setHorarioFechamento(dto.horarioFechamento());
         restaurante.setDono(dono);
 
-        Restaurante restauranteSalvo =
-                repository.save(restaurante);
+        Restaurante restauranteSalvo = repository.save(restaurante);
 
         return mapper.toResponseCadastro(restauranteSalvo);
     }
 
     @Override
-    public List<RestauranteResponseDTO> buscar(String nome){
-        List<Restaurante> restaurantes =
-                repository.findByNomeContainingIgnoreCase(nome);
+    public List<RestauranteResponseDTO> buscarRestaurantes(String nome){
+
+        List<Restaurante> restaurantes = repository.findByNomeContainingIgnoreCase(nome);
 
         return restaurantes.stream()
                 .map(mapper::toResponse)
@@ -62,23 +51,27 @@ public class RestauranteServiceImpl implements RestauranteService{
     }
 
     @Override
-    public void atualizar(UUID id, RestauranteRequestDTO restauranteRequestDTO) {
+    public RestauranteResponseDTO atualizarRestaurante(UUID id,
+                                                       RestauranteRequestDTO restauranteRequestDTO) {
+
         Restaurante restaurante = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Restaurante não encontrado"));
 
-        restaurante.setNome(restauranteRequestDTO.nome());
-        restaurante.setEndereco(
-                enderecoMapper.toEntity(restauranteRequestDTO.endereco()));
-        restaurante.setTipoCozinha(restauranteRequestDTO.tipoCozinha());
-        restaurante.setHorarioAbertura(restauranteRequestDTO.horarioAbertura());
-        restaurante.setHorarioFechamento(restauranteRequestDTO.horarioFechamento());
+        Usuario dono = usuarioRepository.findById(restauranteRequestDTO.donoId()).orElseThrow(() ->
+                new ResourceNotFoundException("Usuário não encontrado"));
 
-        repository.save(restaurante);
+        mapper.atualizar(restaurante,restauranteRequestDTO);
+
+        restaurante.setDono(dono);
+
+        Restaurante restauranteAtualizado = repository.save(restaurante);
+
+        return mapper.toResponse(restauranteAtualizado);
     }
 
     @Override
-    public void deletar(UUID id){
-        Restaurante restaurante = repository.findById(id)
-                .orElseThrow(() ->
+    public void deletarRestaurante(UUID id){
+
+        Restaurante restaurante = repository.findById(id).orElseThrow(() ->
                         new ResourceNotFoundException("Restaurante não encontrado"));
 
         repository.delete(restaurante);

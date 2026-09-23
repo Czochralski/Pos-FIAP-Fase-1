@@ -22,28 +22,27 @@ public class RestauranteController {
 
     @PostMapping
     public RestauranteResponseCadastroDTO salvar(@RequestBody RestauranteRequestDTO restauranteRequestDTO){
-        return service.salvar(restauranteRequestDTO);
+
+        return service.salvarRestaurante(restauranteRequestDTO);
     }
 
     @GetMapping
     public List<RestauranteResponseDTO> buscar(@RequestParam String nome){
-        return service.buscar(nome);
+
+        return service.buscarRestaurantes(nome);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> atualizar(
-            @PathVariable UUID id,
-            @RequestBody  RestauranteRequestDTO restauranteRequestDTO) {
+    public RestauranteResponseDTO atualizar(@PathVariable UUID id,
+                                            @RequestBody  RestauranteRequestDTO restauranteRequestDTO) {
 
-        service.atualizar(id, restauranteRequestDTO);
-
-        return ResponseEntity.noContent().build();
+        return service.atualizarRestaurante(id, restauranteRequestDTO);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletar(@PathVariable UUID id) {
 
-        service.deletar(id);
+        service.deletarRestaurante(id);
 
         return ResponseEntity.noContent().build();
     }
