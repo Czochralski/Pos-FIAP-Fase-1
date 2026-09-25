@@ -4,6 +4,7 @@ import com.czo.restaurantes_api.dto.itemCardapio.ItemCardapioRequestDTO;
 import com.czo.restaurantes_api.dto.itemCardapio.ItemCardapioResponseCadastroDTO;
 import com.czo.restaurantes_api.dto.itemCardapio.ItemCardapioResponseDTO;
 import com.czo.restaurantes_api.service.ItemCardapioService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +21,7 @@ public class ItemCardapioController {
     private final ItemCardapioService service;
 
     @PostMapping
-    public ItemCardapioResponseCadastroDTO salvarItemCardapio(@RequestBody ItemCardapioRequestDTO dto){
+    public ItemCardapioResponseCadastroDTO salvarItemCardapio(@Valid @RequestBody ItemCardapioRequestDTO dto){
         return service.salvarItemCardapio(dto);
     }
 
@@ -30,7 +31,7 @@ public class ItemCardapioController {
     }
 
     @PutMapping("/{id}")
-    public ItemCardapioResponseDTO atualizarItemCardapio(@PathVariable UUID id,
+    public ItemCardapioResponseDTO atualizarItemCardapio(@Valid @PathVariable UUID id,
                                                          @RequestBody ItemCardapioRequestDTO dto) {
         return service.atualizarItemCardapio(id, dto);
     }

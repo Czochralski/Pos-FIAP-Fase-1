@@ -12,7 +12,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 
-@Mapper(componentModel = "spring", uses = ItemCardapioMapper.class)
+@Mapper(componentModel = "spring")
 public interface ItemCardapioMapper {
 
 

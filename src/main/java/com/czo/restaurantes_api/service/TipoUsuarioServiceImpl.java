@@ -49,6 +49,10 @@ public class TipoUsuarioServiceImpl implements TipoUsuarioService{
         TipoUsuario tipoUsuario = repository.findById(id).orElseThrow(() ->
                 new ResourceNotFoundException("Tipo de usuário não encontrado"));
 
+        if (repository.existsByNomeTipoIgnoreCase(tipoUsuarioDTO.nomeTipo())) {
+            throw new RegistroDuplicadoException("Tipo de usuário já existente na base de dados");
+        }
+
         mapper.atualizar(tipoUsuario, tipoUsuarioDTO);
 
         repository.save(tipoUsuario);

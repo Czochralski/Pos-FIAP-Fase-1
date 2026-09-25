@@ -21,7 +21,7 @@ public class RestauranteController {
     private final RestauranteService service;
 
     @PostMapping
-    public RestauranteResponseCadastroDTO salvar(@RequestBody RestauranteRequestDTO restauranteRequestDTO){
+    public RestauranteResponseCadastroDTO salvar(@Valid @RequestBody RestauranteRequestDTO restauranteRequestDTO){
 
         return service.salvarRestaurante(restauranteRequestDTO);
     }
@@ -33,7 +33,7 @@ public class RestauranteController {
     }
 
     @PutMapping("/{id}")
-    public RestauranteResponseDTO atualizar(@PathVariable UUID id,
+    public RestauranteResponseDTO atualizar(@Valid @PathVariable UUID id,
                                             @RequestBody  RestauranteRequestDTO restauranteRequestDTO) {
 
         return service.atualizarRestaurante(id, restauranteRequestDTO);
