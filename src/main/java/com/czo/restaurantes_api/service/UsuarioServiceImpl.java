@@ -2,11 +2,7 @@ package com.czo.restaurantes_api.service;
 
 import com.czo.restaurantes_api.dto.*;
 import com.czo.restaurantes_api.exceptions.ResourceNotFoundException;
-import com.czo.restaurantes_api.mapper.EnderecoMapper;
 import com.czo.restaurantes_api.mapper.UsuarioMapper;
-import com.czo.restaurantes_api.model.Cliente;
-import com.czo.restaurantes_api.model.DonoRestaurante;
-import com.czo.restaurantes_api.model.TipoUsuario;
 import com.czo.restaurantes_api.model.Usuario;
 import com.czo.restaurantes_api.repository.UsuarioRepository;
 import com.czo.restaurantes_api.validator.UsuarioValidator;
@@ -23,30 +19,15 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     private final UsuarioRepository repository;
     private final UsuarioMapper mapper;
-    private final EnderecoMapper enderecoMapper;
     private final UsuarioValidator validator;
     private final PasswordEncoder passwordEncoder;
 
     @Override
     public UsuarioResponseCadastroDTO salvar(UsuarioRequestCadastroDTO usuarioDTO) {
 
-        TipoUsuario tipoUsuario = usuarioDTO.tipoUsuario();
+        Usuario usuario = mapper.toEntity(usuarioDTO);
 
-        if (tipoUsuario == null) {
-            throw new IllegalArgumentException("Tipo de usuário é obrigatório");
-        }
-
-        Usuario usuario = switch (tipoUsuario) {
-            case CLIENTE -> new Cliente();
-            case DONO -> new DonoRestaurante();
-        };
-
-        usuario.setNome(usuarioDTO.nome());
-        usuario.setEmail(usuarioDTO.email());
-        usuario.setLogin(usuarioDTO.login());
         usuario.setSenha(passwordEncoder.encode(usuarioDTO.senha()));
-        usuario.setEndereco(
-                enderecoMapper.toEntity(usuarioDTO.endereco()));
 
         validator.validar(usuario);
         Usuario usuarioSalvo = repository.save(usuario);
@@ -72,11 +53,7 @@ public class UsuarioServiceImpl implements UsuarioService {
                 .orElseThrow(() ->
                         new ResourceNotFoundException("Usuário não encontrado"));
 
-        usuario.setNome(usuarioDTO.nome());
-        usuario.setEmail(usuarioDTO.email());
-        usuario.setLogin(usuarioDTO.login());
-        usuario.setEndereco(
-                enderecoMapper.toEntity(usuarioDTO.endereco()));
+        mapper.atualizar(usuario, usuarioDTO);
 
         validator.validar(usuario);
         repository.save(usuario);
